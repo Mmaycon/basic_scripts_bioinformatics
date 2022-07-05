@@ -17,7 +17,7 @@ library(HelpersMG)
 
 ## Download IDAT files from GEO 
 
-You're probably alredy intersted in a particular dataset. Download it by it's GSE. For this example, we will process GSE161175 dataset 
+You're probably already interested in a particular dataset. Download it by it's GSE. For this example, we will process GSE161175 dataset 
 
 
 ![Where to find the datset link](./images/image_01_geo.png)
@@ -30,7 +30,7 @@ wget("https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSE161175&format=file")
 
 ## Unzip the files
 
-**NOTE**: it will depends how the files came up from download. 
+**NOTE**: it will depends on how the files came up from download. 
 Here are 3 ways to unzip those files:
 
 ### 1.
