@@ -33,20 +33,20 @@ wget("https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSE161175&format=file")
 **NOTE**: it will depends on how the files came up from download. 
 Here are 3 ways to unzip those files:
 
-### 1.
+### #1.
 
 ```r
 untar("file directory/?acc=GSE161175&format=file")
 ```
 
-### 2.
+### #2.
 
 ```r
 idatFiles <- list.files("file directory", pattern = "idat.gz$", full = TRUE, recursive = TRUE)
 sapply(idatFiles, gunzip, overwrite = TRUE)
 ```
 
-### 3.
+### #3.
 
 ```r
 gzfile("file directory")
