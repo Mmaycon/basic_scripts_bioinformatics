@@ -20,8 +20,8 @@ library(HelpersMG)
 You're probably already interested in a particular dataset. Download it by it's GSE. For this example, we will process GSE161175 dataset 
 
 
-![Where to find the datset link](./images/image_01_geo.png)
-![Where to find the datset link](./images/image_02_geo.png)
+![Where to find the dataset link](./images/image_01_geo.png)
+![Where to find the dataset link](./images/image_02_geo.png)
 
 ```r
 setwd("your work directory")
@@ -51,7 +51,7 @@ sapply(idatFiles, gunzip, overwrite = TRUE)
 ```r
 gzfile("file directory")
 ```
-> Normally 1. folloewd by 2. is enough to unzip those files. Once while we need to try the 3. option. 
+> Normally 1. followed by 2. is enough to unzip those files. Once while we need to try the 3. option. 
 
 
 ## Step 1: Read IDAT files 
