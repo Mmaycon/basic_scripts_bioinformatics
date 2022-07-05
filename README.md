@@ -19,7 +19,8 @@ library(HelpersMG)
 
 You're probably alredy intersted in a particular dataset. Download it by it's GSE. For this example, we will process GSE161175 dataset 
 
-[PUT A IMAGE HERE TO ILUSTRATE HOW TO GET THE LINK FROM A SPECIFIC DATASET ON GEO]
+![]("~/GitHub/IDAT.file-processing/image_01_geo.png")
+![]("~/GitHub/IDAT.file-processing/image_02_geo.png")
 
 ```r
 setwd("your work directory")
