@@ -15,7 +15,7 @@ library(GEOquery)
 library(HelpersMG)
 ```
 
-## Download IDAT files from GEO 
+## Download IDAT files from GEO (Gene Expression Omnibus)
 
 You're probably already interested in a particular dataset. Download it by it's GSE. For this example, we will process GSE161175 dataset 
 
@@ -105,4 +105,5 @@ save(beta.idat.file , file = "file directory/beta.idat.file.rda")
 ```
 
 # END. 
+
 
