@@ -18,6 +18,7 @@ library(impute)
 ## Load GSC DNAmet matrix - I collected them from the GEO database (GSE109330 and GSE119774)
 
 #Obs: You should process those IDAT files, get beta-values, and then transform beta-values into M-values in order to get the DNAmet matrix below
+#M-values are better for this 'most variable feature'. They don't get too much perturbation compared to beta-values. 
 
 ```r
 DNAmatrix = readRDS('./loads/67_GSC_Mvalue_DNAmet_matrix_GSE109330_GSE119774.rds')
@@ -144,10 +145,103 @@ adjacency <- adjacency(t(GSC_matrix_MVF_naomit), power = softPower)
 
 ## Module Construction
 
+### Defining Dissimilarity
+TOM <- TOMsimilarity(adjacency) #The current matrix gives us the similarity between genes
+TOM.dissimilarity <- 1-TOM # Converting similarity matrix into a dissimilarity matrix
+
+### Hierarchical Clustering Analysis
+
+#### Creating the dendrogram 
+geneTree <- hclust(as.dist(TOM.dissimilarity), method = "average") 
+
+#### Set minimum modulus (Authors of WGCNA recommend to start at a minClusterSize = 30)
+Modules <- cutreeDynamic(dendro = geneTree, distM = TOM.dissimilarity, deepSplit = 2, pamRespectsDendro = FALSE, minClusterSize = 30)
+
+table(Modules) # probes by modulus
+#Note: label modulo 0 is related to unassigned probes (when there is label 0)
+#Modules 0    1    2    3 
+#probes  5 1122  394  380 
+
+ModuleColors <- labels2colors(Modules) #assigns each module number a color
+table(ModuleColors) 
+#blue     brown      grey turquoise 
+#394       380         5      1122
+
+#### plot the gene dendrogram with the module colors
+plotDendroAndColors(geneTree, ModuleColors,"Module",
+                    dendroLabels = FALSE, hang = 0.03,
+                    addGuide = TRUE, guideHang = 0.05,
+                    main = "Probe dendrogram and module colors")
+                    
+[image] [image] [image] [image] [image] [image] [image] [image] [image] [image] [image] [image]
 
 
+## Module Eigengene/Eigenprobe (ME) Identification
+
+#I just bored the terms used for gene expression to DNA methylation 
+#A ME (Module Eigenprobe) is the standardized probe methylation level profile for a given module
+#EigenProbes represent the DNA methylation level of the majority of probes within a module.
+
+MElist <- moduleEigengenes(t(GSC_matrix_MVF_naomit), colors = ModuleColors) 
+MEs <- MElist$eigengenes 
+print(head(MEs))
+
+[image] [image] [image] [image] [image] [image] [image] [image] [image] [image] [image] [image]
+#These are Eigenprobes (sample score by module)
 
 
+## Module Merging
+
+### Merge the modules that have similar expression profiles (more meaningful modules)
+
+ME.dissimilarity = 1-cor(MElist$eigengenes, use="complete") #Calculate eigenprobe dissimilarity
+
+METree = hclust(as.dist(ME.dissimilarity), method = "average") #Clustering eigenprobe
+par(cex = 0.8);
+par(mar = c(0,4,4,0))
+plot(METree)
+abline(h=.25, col = "red") #a height of .25 corresponds to correlation of .75
+
+[image] [image] [image] [image] [image] [image] [image] [image] [image] [image] [image] [image]
+#The plot above shows all of the modules which have more than 75% similarity (all modules below the abline)
+
+merge <- mergeCloseModules(t(GSC_matrix_MVF_naomit), ModuleColors, cutHeight = .25) #merging modulus
+mergedColors = merge$colors # The merged module colors, assigning one color to each module
+mergedMEs = merge$newMEs # Eigengenes of the new merged modules
+
+
+### Comparing the original modules against the merged ones
+plotDendroAndColors(geneTree, cbind(ModuleColors, mergedColors), 
+                    c("Original Module", "Merged Module"),
+                    dendroLabels = FALSE, hang = 0.03,
+                    addGuide = TRUE, guideHang = 0.05,
+                    main = "Probe dendrogram and module colors for original and merged modules")
+#The merged modules are your network
+
+
+## Extract probes from a specific module
+
+probes_modulos <- as.data.frame(c(rownames(GSC_matrix_MVF_naomit)))
+probes_modulos$modulos <- mergedColors
+
+table(probes_modulos$modulos)
+#blue      grey turquoise 
+#774         5      1122
+
+#Select the module within the most probes, for instance
+probes_biggest_module <- subset(probes_modulos, modulos %in% "turquoise")
+
+save(probes_biggest_module, file = "./moduleX_probes.rds")
+
+## Possible usage for the WGCNA/co-correlation analysis 
+
+#1. Get the probe set from the biggest module if you're looking for a particular phenotype to your samples
+
+#2. Use Eigenprobes values to correlate to metadata informations 
+
+#3. Correlate Eigenprobe values from  these GSC samples against other sample group (Eigenprobe values) of your interest. For that, you must run this analysis to the other sample group.
+
+Look. Its either possible to generate a probe set based on the samples of your choice or based on a probe set your're interested in. Therfore, there are a lot of options for this kind of analysis. Be creative, but be consistency and never p-hack ;]
 
 
 
