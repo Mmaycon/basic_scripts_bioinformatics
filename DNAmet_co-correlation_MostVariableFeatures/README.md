@@ -255,7 +255,7 @@ probes_biggest_module <- subset(probes_modulos, modulos %in% "turquoise")
 save(probes_biggest_module, file = "./moduleX_probes.rds")
 ```
 
-## Possible usage for the WGCNA/co-correlation analysis 
+## Possible usage for the WGCNA/co-methylation analysis 
 
 1. Get the probe set from the biggest module if you're looking for a particular phenotype to your samples
 
@@ -266,6 +266,8 @@ save(probes_biggest_module, file = "./moduleX_probes.rds")
 Look. It's either possible to generate a probe set based on the samples of your choice or based on a probe set you're interested in. Therefore, there are a lot of options for this kind of analysis. Be creative, but be consistent and do never p-hack ;]
 
 
+# References 
+[.....]
 
 
 
