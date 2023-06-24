@@ -146,15 +146,23 @@ adjacency <- adjacency(t(GSC_matrix_MVF_naomit), power = softPower)
 ## Module Construction
 
 ### Defining Dissimilarity
+
+```r
 TOM <- TOMsimilarity(adjacency) #The current matrix gives us the similarity between genes
 TOM.dissimilarity <- 1-TOM # Converting similarity matrix into a dissimilarity matrix
+```
 
 ### Hierarchical Clustering Analysis
 
 #### Creating the dendrogram 
+
+```r
 geneTree <- hclust(as.dist(TOM.dissimilarity), method = "average") 
+```
 
 #### Set minimum modulus (Authors of WGCNA recommend to start at a minClusterSize = 30)
+
+```r
 Modules <- cutreeDynamic(dendro = geneTree, distM = TOM.dissimilarity, deepSplit = 2, pamRespectsDendro = FALSE, minClusterSize = 30)
 
 table(Modules) # probes by modulus
@@ -172,7 +180,7 @@ plotDendroAndColors(geneTree, ModuleColors,"Module",
                     dendroLabels = FALSE, hang = 0.03,
                     addGuide = TRUE, guideHang = 0.05,
                     main = "Probe dendrogram and module colors")
-                    
+```                   
 [image] [image] [image] [image] [image] [image] [image] [image] [image] [image] [image] [image]
 
 
@@ -182,10 +190,11 @@ plotDendroAndColors(geneTree, ModuleColors,"Module",
 #A ME (Module Eigenprobe) is the standardized probe methylation level profile for a given module
 #EigenProbes represent the DNA methylation level of the majority of probes within a module.
 
+```r
 MElist <- moduleEigengenes(t(GSC_matrix_MVF_naomit), colors = ModuleColors) 
 MEs <- MElist$eigengenes 
 print(head(MEs))
-
+```
 [image] [image] [image] [image] [image] [image] [image] [image] [image] [image] [image] [image]
 #These are Eigenprobes (sample score by module)
 
@@ -194,6 +203,7 @@ print(head(MEs))
 
 ### Merge the modules that have similar expression profiles (more meaningful modules)
 
+```r
 ME.dissimilarity = 1-cor(MElist$eigengenes, use="complete") #Calculate eigenprobe dissimilarity
 
 METree = hclust(as.dist(ME.dissimilarity), method = "average") #Clustering eigenprobe
@@ -208,19 +218,22 @@ abline(h=.25, col = "red") #a height of .25 corresponds to correlation of .75
 merge <- mergeCloseModules(t(GSC_matrix_MVF_naomit), ModuleColors, cutHeight = .25) #merging modulus
 mergedColors = merge$colors # The merged module colors, assigning one color to each module
 mergedMEs = merge$newMEs # Eigengenes of the new merged modules
-
+```
 
 ### Comparing the original modules against the merged ones
+
+```r
 plotDendroAndColors(geneTree, cbind(ModuleColors, mergedColors), 
                     c("Original Module", "Merged Module"),
                     dendroLabels = FALSE, hang = 0.03,
                     addGuide = TRUE, guideHang = 0.05,
                     main = "Probe dendrogram and module colors for original and merged modules")
 #The merged modules are your network
-
+```
 
 ## Extract probes from a specific module
 
+```r
 probes_modulos <- as.data.frame(c(rownames(GSC_matrix_MVF_naomit)))
 probes_modulos$modulos <- mergedColors
 
@@ -232,16 +245,17 @@ table(probes_modulos$modulos)
 probes_biggest_module <- subset(probes_modulos, modulos %in% "turquoise")
 
 save(probes_biggest_module, file = "./moduleX_probes.rds")
+```
 
 ## Possible usage for the WGCNA/co-correlation analysis 
 
 #1. Get the probe set from the biggest module if you're looking for a particular phenotype to your samples
 
-#2. Use Eigenprobes values to correlate to metadata informations 
+#2. Use Eigenprobes values to correlate to metadata information 
 
-#3. Correlate Eigenprobe values from  these GSC samples against other sample group (Eigenprobe values) of your interest. For that, you must run this analysis to the other sample group.
+#3. Correlate Eigenprobe values from these GSC samples against another sample group (Eigenprobe values) of your interest. For that, you must run this analysis to the other sample group.
 
-Look. Its either possible to generate a probe set based on the samples of your choice or based on a probe set your're interested in. Therfore, there are a lot of options for this kind of analysis. Be creative, but be consistency and never p-hack ;]
+Look. It's either possible to generate a probe set based on the samples of your choice or based on a probe set you're interested in. Therefore, there are a lot of options for this kind of analysis. Be creative, but be consistent and do never p-hack ;]
 
 
 
