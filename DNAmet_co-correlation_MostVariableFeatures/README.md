@@ -232,12 +232,12 @@ plotDendroAndColors(geneTree, cbind(ModuleColors, mergedColors),
                     dendroLabels = FALSE, hang = 0.03,
                     addGuide = TRUE, guideHang = 0.05,
                     main = "Probe dendrogram and module colors for original and merged modules")
-
+```
 ![](./images/probe_dendrogram_merged_module_colors.png)
 
 
 The merged modules are your network
-```
+
 
 ## Extract probes from a specific module
 
