@@ -199,6 +199,7 @@ print(head(MEs))
 ```
 
 ![](./images/print_eigenprobes.png)
+
 These are Eigenprobes (sample score by module)
 
 
