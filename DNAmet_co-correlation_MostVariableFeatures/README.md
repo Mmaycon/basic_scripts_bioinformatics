@@ -94,9 +94,9 @@ plot(sampleTree, main = "Sample clustering to detect outliers", sub="", xlab="",
 rect.hclust(tree = sampleTree, k = 3, which = 1:3, border = 1:3)
 ```
 
-![Where to find the dataset link](./images/sample_outiler_check.pdf)
+![](./images/sample_outiler_check.png)
 
-If there is any sample outleir 
+If there is any sample outlier 
 
 ```r
 cut.sampleTree <- cutreeStatic(sampleTree, cutHeight = 15, minSize = 10) 
