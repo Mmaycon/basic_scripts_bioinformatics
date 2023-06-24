@@ -197,7 +197,8 @@ MElist <- moduleEigengenes(t(GSC_matrix_MVF_naomit), colors = ModuleColors)
 MEs <- MElist$eigengenes 
 print(head(MEs))
 ```
-[image] [image] [image] [image] [image] [image] [image] [image] [image] [image] [image] [image]
+
+![](./images/print_eigenprobes.png)
 These are Eigenprobes (sample score by module)
 
 
@@ -232,6 +233,7 @@ plotDendroAndColors(geneTree, cbind(ModuleColors, mergedColors),
                     main = "Probe dendrogram and module colors for original and merged modules")
 
 ![](./images/probe_dendrogram_merged_module_colors.png)
+
 
 The merged modules are your network
 ```
