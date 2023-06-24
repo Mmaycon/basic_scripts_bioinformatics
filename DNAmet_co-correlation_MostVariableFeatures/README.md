@@ -1,4 +1,4 @@
-# Find co-correlated DNA methylation probes 
+# Find co-methylation modules within a given probe set (DNAmet probes, 450k)
 
 In this tutorial, we gonna find features (DNAmet probes) that might catch some phenotype on Glioblastoma Stem Cells (GSCs).
 We will use the WGCNA package to compute the weighted correlation within GSCs.
