@@ -17,8 +17,8 @@ library(impute)
 
 ## Load GSC DNAmet matrix - I collected them from the GEO database (GSE109330 and GSE119774)
 
-#Obs: You should process those IDAT files, get beta-values, and then transform beta-values into M-values in order to get the DNAmet matrix below
-#M-values are better for this 'most variable feature'. They don't get too much perturbation compared to beta-values. 
+Obs: You should process those IDAT files, get beta-values, and then transform beta-values into M-values in order to get the DNAmet matrix below
+M-values are better for this 'most variable feature'. They don't get too much perturbation compared to beta-values. 
 
 ```r
 DNAmatrix = readRDS('./loads/67_GSC_Mvalue_DNAmet_matrix_GSE109330_GSE119774.rds')
@@ -130,9 +130,9 @@ plot(spt$fitIndices[,1], spt$fitIndices[,5],
 text(spt$fitIndices[,1], spt$fitIndices[,5], labels= spt$fitIndices[,1],col="red")
 ```
 
-#Obs: We should maximize the R2 value and minimize mean connectivity
-#Choose a Power higher then a R^2 of 0.8 & the first lowest mean connectivity
-#In this case a Power = 5 is within a R^2 of 0.80 & also is the first lowest mean connectivity
+Obs: We should maximize the R2 value and minimize mean connectivity
+Choose a Power higher then a R^2 of 0.8 & the first lowest mean connectivity
+In this case a Power = 5 is within a R^2 of 0.80 & also is the first lowest mean connectivity
 
 
 ### calling the Adjacency Function
@@ -186,9 +186,9 @@ plotDendroAndColors(geneTree, ModuleColors,"Module",
 
 ## Module Eigengene/Eigenprobe (ME) Identification
 
-#I just bored the terms used for gene expression to DNA methylation 
-#A ME (Module Eigenprobe) is the standardized probe methylation level profile for a given module
-#EigenProbes represent the DNA methylation level of the majority of probes within a module.
+I just bored the terms used for gene expression to DNA methylation 
+A ME (Module Eigenprobe) is the standardized probe methylation level profile for a given module
+EigenProbes represent the DNA methylation level of the majority of probes within a module.
 
 ```r
 MElist <- moduleEigengenes(t(GSC_matrix_MVF_naomit), colors = ModuleColors) 
@@ -196,7 +196,7 @@ MEs <- MElist$eigengenes
 print(head(MEs))
 ```
 [image] [image] [image] [image] [image] [image] [image] [image] [image] [image] [image] [image]
-#These are Eigenprobes (sample score by module)
+These are Eigenprobes (sample score by module)
 
 
 ## Module Merging
@@ -213,7 +213,7 @@ plot(METree)
 abline(h=.25, col = "red") #a height of .25 corresponds to correlation of .75
 
 [image] [image] [image] [image] [image] [image] [image] [image] [image] [image] [image] [image]
-#The plot above shows all of the modules which have more than 75% similarity (all modules below the abline)
+The plot above shows all of the modules which have more than 75% similarity (all modules below the abline)
 
 merge <- mergeCloseModules(t(GSC_matrix_MVF_naomit), ModuleColors, cutHeight = .25) #merging modulus
 mergedColors = merge$colors # The merged module colors, assigning one color to each module
@@ -228,7 +228,7 @@ plotDendroAndColors(geneTree, cbind(ModuleColors, mergedColors),
                     dendroLabels = FALSE, hang = 0.03,
                     addGuide = TRUE, guideHang = 0.05,
                     main = "Probe dendrogram and module colors for original and merged modules")
-#The merged modules are your network
+The merged modules are your network
 ```
 
 ## Extract probes from a specific module
@@ -249,11 +249,11 @@ save(probes_biggest_module, file = "./moduleX_probes.rds")
 
 ## Possible usage for the WGCNA/co-correlation analysis 
 
-#1. Get the probe set from the biggest module if you're looking for a particular phenotype to your samples
+1. Get the probe set from the biggest module if you're looking for a particular phenotype to your samples
 
-#2. Use Eigenprobes values to correlate to metadata information 
+2. Use Eigenprobes values to correlate to metadata information 
 
-#3. Correlate Eigenprobe values from these GSC samples against another sample group (Eigenprobe values) of your interest. For that, you must run this analysis to the other sample group.
+3. Correlate Eigenprobe values from these GSC samples against another sample group (Eigenprobe values) of your interest. For that, you must run this analysis to the other sample group.
 
 Look. It's either possible to generate a probe set based on the samples of your choice or based on a probe set you're interested in. Therefore, there are a lot of options for this kind of analysis. Be creative, but be consistent and do never p-hack ;]
 
