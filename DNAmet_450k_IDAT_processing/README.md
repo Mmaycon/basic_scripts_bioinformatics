@@ -1,6 +1,6 @@
 # IDAT file processing 
 
-In this tutorial you shall see how to convert 450k/EPIC array from IDAT files to beta-values - the DNA methylation levels. 
+In this tutorial, you shall see how to convert 450k/EPIC array from IDAT files to beta-values - the DNA methylation levels. 
 
 ## Preparing packages 
 
