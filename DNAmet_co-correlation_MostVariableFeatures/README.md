@@ -31,7 +31,7 @@ dim(DNAmatrix) #452567     67
 require(meffil)
 MostVF_GSC <- meffil.most.variable.cpgs(
   as.matrix(DNAmatrix),
-  n = 10000,
+  n = 2000, # you can choose more than that eg 10k most variable features
   sites = NULL,
   samples = NULL,
   autosomal = T,
@@ -39,7 +39,7 @@ MostVF_GSC <- meffil.most.variable.cpgs(
   outlier.iqr.factor = NA
 )
 
-length(MostVF_GSC) #10000
+length(MostVF_GSC) #2000
 
 GSC_matrix_MVF <- DNAmatrix[MostVF_GSC,]
 ```
@@ -51,7 +51,7 @@ Obs: for the sake of practice, we're gonna use only one of these two 'NA removal
 
 ```r
 GSC_matrix_MVF_naomit <- na.omit(GSC_matrix_MVF)
-dim(MostVF_GSC_naomit) #9396   67
+dim(MostVF_GSC_naomit) ##1901  67
 ```
 
 ### Replace NA through KNN (K-nearest neighbors)
@@ -94,7 +94,7 @@ plot(sampleTree, main = "Sample clustering to detect outliers", sub="", xlab="",
 rect.hclust(tree = sampleTree, k = 3, which = 1:3, border = 1:3)
 ```
 
-[IMAGE] [IMAGE] [IMAGE] [IMAGE] [IMAGE] [IMAGE] [IMAGE] [IMAGE]
+![Where to find the dataset link](./images/sample_outiler_check.pdf)
 
 If there is any sample outleir 
 
