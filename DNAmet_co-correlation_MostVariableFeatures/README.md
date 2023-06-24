@@ -120,6 +120,7 @@ plot(spt$fitIndices[,1],spt$fitIndices[,2],
 text(spt$fitIndices[,1],spt$fitIndices[,2],col="red")
 abline(h=0.80,col="red")
 ```
+![](./images/R2_fpower.png)
 
 ### mean connectivity as a function of soft thresholds (power)
 ```r
@@ -129,6 +130,7 @@ plot(spt$fitIndices[,1], spt$fitIndices[,5],
      main = paste("Mean connectivity"))
 text(spt$fitIndices[,1], spt$fitIndices[,5], labels= spt$fitIndices[,1],col="red")
 ```
+![](./images/MeanConnec_fpower.png)
 
 Obs: We should maximize the R2 value and minimize mean connectivity
 Choose a Power higher then a R^2 of 0.8 & the first lowest mean connectivity
@@ -181,7 +183,7 @@ plotDendroAndColors(geneTree, ModuleColors,"Module",
                     addGuide = TRUE, guideHang = 0.05,
                     main = "Probe dendrogram and module colors")
 ```                   
-[image] [image] [image] [image] [image] [image] [image] [image] [image] [image] [image] [image]
+![](./images/probe_dendrogram_module_colors.png)
 
 
 ## Module Eigengene/Eigenprobe (ME) Identification
@@ -228,6 +230,9 @@ plotDendroAndColors(geneTree, cbind(ModuleColors, mergedColors),
                     dendroLabels = FALSE, hang = 0.03,
                     addGuide = TRUE, guideHang = 0.05,
                     main = "Probe dendrogram and module colors for original and merged modules")
+
+![](./images/probe_dendrogram_merged_module_colors.png)
+
 The merged modules are your network
 ```
 
