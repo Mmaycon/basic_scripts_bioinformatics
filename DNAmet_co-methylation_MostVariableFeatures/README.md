@@ -4,7 +4,7 @@ In this tutorial, we gonna find features (DNAmet probes) that might catch some p
 We will use the WGCNA package to compute the weighted correlation within GSCs.
 
 ## PC setup 
-asdsadsadasdsadasdasdasdasd
+
 
 ## Preparing packages
 
